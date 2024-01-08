@@ -1,10 +1,16 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import BaseLayout from "../layouts/BaseLayout.vue";
+// import BaseLayout from "@/layouts/BaseLayout.vue";
+import RegisterComponent from "@/components/RegisterComponent.vue";
 const routes: Array<RouteRecordRaw> = [
+  //   {
+  //     path: "/",
+  //     component: BaseLayout,
+  //     props: { namePage: "Base layout" },
+  //     children: [],
+  //   },
   {
     path: "/",
-    component: BaseLayout,
-    props: { namePage: "Base layout" },
+    component: RegisterComponent,
     children: [],
   },
 ];
