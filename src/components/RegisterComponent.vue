@@ -14,9 +14,6 @@
           />
           <label for="email">email</label>
         </span>
-        <small id="text-error" class="p-error">{{
-          errorMessage.email || "&nbsp;"
-        }}</small>
       </div>
       <span class="p-float-label mt-4 w-full">
         <PInputText class="w-full" id="phone" v-model="phone" />
