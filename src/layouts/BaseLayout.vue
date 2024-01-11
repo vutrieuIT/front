@@ -1,13 +1,15 @@
 <template>
   <router-view />
-  <Toast />
+  <PToast />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import PToast from "primevue/toast";
 
 export default defineComponent({
   name: "BaseLayout",
+  components: { PToast },
   props: {
     namePage: {
       type: String,
