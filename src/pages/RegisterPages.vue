@@ -4,41 +4,40 @@
       <div class="flex justify-content-between align-items-center">
         <h1 class="mb-1">Đăng ký</h1>
       </div>
-      <div class="flex align-items-center gap-2">
-        <span class="p-float-label mt-4 w-full">
-          <PInputText
-            class="w-full"
-            :class="{ 'p-invalid': errorMessage.email }"
-            id="email"
-            v-model="email"
-          />
-          <label for="email">email</label>
-        </span>
-      </div>
-      <span class="p-float-label mt-4 w-full">
-        <PInputText class="w-full" id="phone" v-model="phone" />
-        <label for="phone">Số điện thoại</label>
-      </span>
-      <span class="p-float-label mt-4 w-full">
-        <PInputText class="w-full" id="password" v-model="password" />
-        <label for="password">Mật khẩu</label>
-      </span>
-      <span class="p-float-label mt-4 w-full">
-        <PInputText
-          class="w-full"
-          id="passwordConfirm"
-          v-model="passwordConfirm"
-        />
-        <label for="passwordConfirm">Xác nhận mật khẩu</label>
-      </span>
+      <VDTInput
+        label="Email"
+        v-model="email"
+        :errorMessage="errorMessage.email"
+      >
+      </VDTInput>
+      <VDTInput
+        label="Số điện thoại"
+        v-model="phone"
+        :errorMessage="errorMessage.phone"
+      />
+      <VDTInput
+        label="Mật khẩu"
+        v-model="password"
+        :errorMessage="errorMessage.password"
+      ></VDTInput>
+      <VDTInput
+        label="Xác nhận mật khẩu"
+        v-model="passwordConfirm"
+        :errorMessage="errorMessage.passwordConfirm"
+      ></VDTInput>
       <div class="flex align-items-center mt-2">
         <PCheckbox v-model="acceptPolicy" :binary="true" />
         <label for="ingredient4" class="ml-2">
           Đồng ý với điều khoản của Shop
         </label>
       </div>
-      <div class="card flex justify-content-center w-full mt-4">
-        <PButton class="w-full" label="Submit" @click="onRegister()" />
+      <div class="flex justify-content-center w-full mt-4">
+        <PButton
+          class="w-full"
+          :disabled="!enableButton()"
+          label="Submit"
+          @click="onRegister()"
+        />
       </div>
     </form>
 
@@ -62,11 +61,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import PInputText from "primevue/inputtext";
 import PCheckbox from "primevue/checkbox";
 import PButton from "primevue/button";
 
 import { useToast } from "primevue/usetoast";
+import VDTInput from "../components/VDTInput.vue";
 
 interface ErrorMessage {
   email: string;
@@ -77,11 +76,11 @@ interface ErrorMessage {
 
 // componet Đăng ký
 export default defineComponent({
-  name: "RegisterComponent",
+  name: "ResgisterPages",
   components: {
-    PInputText,
     PCheckbox,
     PButton,
+    VDTInput,
   },
   setup() {
     const ptoast = useToast();
@@ -106,25 +105,44 @@ export default defineComponent({
 
       if (!phone.value || phone.value === "") {
         errorMessage.value.phone = "vui lòng nhập số điện thoại";
+      } else {
+        errorMessage.value.phone = "";
       }
 
       if (!password.value || password.value === "") {
         errorMessage.value.password = "vui lòng nhập mật khẩu";
+      } else {
+        errorMessage.value.password = "";
       }
 
       if (!passwordConfirm.value || passwordConfirm.value !== password.value) {
         errorMessage.value.passwordConfirm = "mật khẩu không khớp";
+      } else {
+        errorMessage.value.passwordConfirm = "";
+      }
+
+      if (!acceptPolicy.value) {
+        ptoast.add({
+          severity: "error",
+          summary: "Lỗi",
+          detail: "Vui lòng đồng ý với điều khoản của Shop",
+          life: 3000,
+        });
       }
     };
 
     const onRegister = () => {
       validateRegisterForm();
-      ptoast.add({
-        severity: "info",
-        summary: "Thông báo",
-        detail: errorMessage.value.email,
-        life: 3000,
-      });
+    };
+
+    const enableButton = () => {
+      return (
+        email.value !== "" &&
+        phone.value !== "" &&
+        password.value !== "" &&
+        passwordConfirm.value !== "" &&
+        acceptPolicy.value
+      );
     };
 
     return {
@@ -136,6 +154,7 @@ export default defineComponent({
       acceptPolicy,
       validateRegisterForm,
       onRegister,
+      enableButton,
     };
   },
 });

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import BaseLayout from "@/layouts/BaseLayout.vue";
-import RegisterComponent from "@/components/RegisterComponent.vue";
+import RegisterPages from "@/pages/RegisterPages.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -8,8 +8,8 @@ const routes: Array<RouteRecordRaw> = [
     props: { namePage: "Base layout" },
     children: [
       {
-        path: "/",
-        component: RegisterComponent,
+        path: "/register",
+        component: RegisterPages,
         children: [],
       },
     ],
