@@ -9,6 +9,11 @@ const routes: Array<RouteRecordRaw> = [
     props: { namePage: "Base layout" },
     children: [
       {
+        path: "/",
+        component: () => import("@/pages/HomePage.vue"),
+        children: [],
+      },
+      {
         path: "/register",
         component: RegisterPages,
         children: [],

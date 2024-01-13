@@ -1,9 +1,10 @@
 interface Product {
   sale: boolean;
-  quantity: number;
   name: string;
   image: string;
   numberSold: number;
+  price: number;
+  discount: number;
   rating: number;
 }
 
