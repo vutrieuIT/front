@@ -3,8 +3,10 @@
     <h1>Home Page</h1>
     <p>Here is the home page.</p>
     <div class="grid w-full">
-      <div class="col-3"></div>
-      <div class="grid col-9">
+      <div class="col-2">
+        <!-- TODO navbar -->
+      </div>
+      <div class="grid col-10">
         <div class="sm:col-6 md:col-4 lg:col-3">
           <VDTProduct :product="product"></VDTProduct>
         </div>
