@@ -34,7 +34,9 @@
     <!-- header search -->
     <div class="header-search flex justify-content-between align-items-center">
       <div class="logo">VDT Shop</div>
-      <div class="search-bar"></div>
+      <div class="search-bar">
+        <VDTSeach v-model="keyword" />
+      </div>
       <div class="cart flex justify-content-center align-items-center">
         <i class="pi pi-shopping-cart"></i>
       </div>
@@ -43,11 +45,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, watch, ref } from "vue";
+import VDTSeach from "@/components/VDTSearch.vue";
 
 export default defineComponent({
   name: "VDTHeader",
-  components: {},
+  components: {
+    VDTSeach,
+  },
+  setup() {
+    const keyword = ref("");
+    watch(
+      () => keyword.value,
+      () => {
+        // TODO search API
+      }
+    );
+    return {
+      keyword,
+    };
+  },
 });
 </script>
 
@@ -108,9 +125,7 @@ export default defineComponent({
       color: #461ae4;
     }
     .search-bar {
-      width: 50%;
-      height: 100%;
-      background-color: #fff;
+      padding: 10px;
       flex: 1;
     }
     .cart {
